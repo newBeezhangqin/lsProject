@@ -1,5 +1,6 @@
 <template>
   <div id="outCity">
+    <guideBar />
      <Header />
        <dataShow :test='test'
             :dataShow = 'dataShow'
@@ -33,6 +34,7 @@
   </div> 
 </template>
 <script>
+import guideBar from '../components/guideBar'
 import Header from '../components/Header'
 import dataShow from '../components/dataShow'
 import Proportion from '../components/Proportion'
@@ -42,6 +44,9 @@ import record from '../components/recordsConsumption'
 import doubleLine from '../components/doubleLine'
 export default {
   name:'outCity',
+   components:{
+       Header,dataShow,Proportion,centerSider,singleLine,record,doubleLine,guideBar
+  },
    data(){
     return{
         title:'药占比',
@@ -289,9 +294,7 @@ export default {
           })
       }
   },
-  components:{
-       Header,dataShow,Proportion,centerSider,singleLine,record,doubleLine
-  }
+ 
 }
 </script>
 

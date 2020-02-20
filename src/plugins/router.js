@@ -8,6 +8,7 @@ const  outPatient = () => import  ('../pages/outPatient')
 const  countryHos = () => import  ('../pages/countryHos')
 const  yunheHos = () => import  ('../pages/yunheHos')
 const  epidemic  = () => import('../pages/Epidemic')  // 路由懒加载 
+const test = ()=> import  ('../pages/test')
 let routes = [
     // 配置路由的页面的设置
     {path:'/',redirect:'/outpatient'},
@@ -15,14 +16,12 @@ let routes = [
     // {path:'/countryhos',component:countryHos},
     {path:'/outpatient',component:outPatient},
     {path:'/epidemic',component:epidemic},
-    // {path:'/login',component:Login},
+    {path:'/test',component:test}
   
 ]
 
-let router =  new VueRouter(
-    {  mode:'history',
-        routes, 
-    }    
-)
+let router =  new VueRouter({  
+    routes, 
+    })
 
 export default router ; //默认导出得到 

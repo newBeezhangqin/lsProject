@@ -2,10 +2,20 @@
   <div id="outCity">
     <guideBar />
      <Header />
-       <dataShow :test='test'
-            :dataShow = 'dataShow'
-            :dataYesShow = 'dataYesShow'
-       />
+     
+              <el-row type="flex" >
+        <el-col style ='width:25vw'> <dataLogo 
+                :dataTitle = 'dataTitle'
+             />
+             </el-col>
+        <el-col  style="width:75vw;background:#061123;margin:0;padding:0" >
+            <lastData 
+                :dataShow = 'dataShow'
+                :dataYesShow = 'dataYesShow'
+            />
+        </el-col>
+    </el-row>
+    
      <el-row   style="background:#061123;">
           <div class="margin">
             <el-col   style="width:20.8vw;height:64.8vh;margin-left:1.82vw;"><record 
@@ -36,16 +46,17 @@
 <script>
 import guideBar from '../components/guideBar'
 import Header from '../components/Header'
-import dataShow from '../components/dataShow'
+import dataLogo from '../components/dataLogo'
 import Proportion from '../components/Proportion'
 import singleLine from  '../components/singleLine'
 import centerSider from '../components/centerSider'
 import record from '../components/recordsConsumption'
 import doubleLine from '../components/doubleLine'
+import lastData from '../components/lastData'
 export default {
   name:'outCity',
    components:{
-       Header,dataShow,Proportion,centerSider,singleLine,record,doubleLine,guideBar
+       Header,dataLogo,Proportion,centerSider,singleLine,record,doubleLine,guideBar,lastData
   },
    data(){
     return{
@@ -63,8 +74,8 @@ export default {
         Days:6,
         dataTimeDou:['1','2','3','4','5','6','7','8','9','10','11','12'],
         dataNumberDou:[],
-        time1:20,   // 获取的时间1  数字越大 代表的时间开始越早
-        time2:6,   // 获取的时间2   
+        time1:200,   // 获取的时间1  数字越大 代表的时间开始越早
+        time2:60,   // 获取的时间2   
         lastMonth:30, // 自动获取上个月的时间
         totalSum:[],
         chineseMe:[],
@@ -321,5 +332,8 @@ export default {
   .row-bg {
     padding: 0 0 10px 0;
     background-color: #f9fafc;
+  }
+  .dataShow{
+      display: flex;
   }
 </style>

@@ -1,17 +1,20 @@
 <template>
     <div id="test">
         <h1> 这是一个测试页面</h1>
-        <ceshi :data= 'one'/>
+        <lastData 
+            :dataName = 'dataName'
+          />
     </div>
 </template>
 
 <script>
-import ceshi from '../components/ceshi'
+import lastData from '../components/lastData'
 export default {
     name:'test',
     data(){
         return{
-            one:''
+            one:'',
+            dataName:['213','312','ooo','1231']
         }
     },
     mounted(){
@@ -19,13 +22,15 @@ export default {
       
     },
     components:{
-            ceshi
+        lastData
     }
 }
 </script>
 
 <style scoped>
     #test{
+         width:  100vw;
+         height: 100vh;
         text-align: center;
         color: brown;
     }

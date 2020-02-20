@@ -1,9 +1,18 @@
 <template>
   <div id="outCity">
      <Header  />
-      <dataShow :dataTitle = 'dataTitle' :dataShow= 'dataShow'
-        :dataYesShow = 'dataYesShow'
-      />
+       <el-row type="flex" >
+        <el-col style ='width:25vw'> <dataLogo 
+                :dataTitle = 'dataTitle'
+             />
+             </el-col>
+        <el-col  style="width:75vw;background:#061123;margin:0;padding:0" >
+            <lastData 
+                :dataShow = 'dataShow'
+                :dataYesShow = 'dataYesShow'
+            />
+        </el-col>
+    </el-row>
   <el-row  style="background:#061123;">
         <div class="test">
              <el-col   style="width:20.8vw;height:64.8vh;margin-left:1.82vw;"><record 
@@ -40,12 +49,13 @@
 </template>
 <script>
 import Header from '../components/Header'
-import dataShow from '../components/dataShow'
+import dataLogo from '../components/dataLogo'
 import Proportion from '../components/Proportion'
 import singleLine from  '../components/singleLine'
 import centerSider from '../components/centerSider'
 import record from '../components/recordsConsumption'
 import doubleLine from '../components/doubleLine'
+import lastData from '../components/lastData'
 export default {
   name:'outCity',
    data(){
@@ -66,7 +76,7 @@ export default {
         dataNumberDou:[],
         maxDou:200000,
         intervalDou:50000,
-        time1:20,   // 获取的时间1  数字越大 代表的时间开始越早
+        time1:200,   // 获取的时间1  数字越大 代表的时间开始越早
         time2:6,   // 获取的时间2   
         lastMonth:30, // 自动获取上个月的时间
         totalSum:[],
@@ -284,7 +294,7 @@ export default {
       },
   },
   components:{
-       Header,dataShow,Proportion,centerSider,singleLine,record,doubleLine
+       Header,dataLogo,Proportion,centerSider,singleLine,record,doubleLine,lastData
   }
 }
 </script>
@@ -316,4 +326,5 @@ export default {
     padding: 0 0 10px 0;
     background-color: #f9fafc;
   }
+
 </style>

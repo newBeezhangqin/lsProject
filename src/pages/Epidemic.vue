@@ -2,15 +2,25 @@
   <div id="epidemic">
     <guideBar />
      <Header />
-       <dataShow :test='test'
-            :dataShow = 'dataShow'
-            :dataYesShow = 'dataYesShow'
-       />
+       <el-row type="flex" >
+        <el-col style ='width:25vw'> <dataLogo 
+                :dataTitle = 'dataTitle'
+             />
+             </el-col>
+        <el-col  style="width:75vw;background:#061123;margin:0;padding:0" >
+            <lastData 
+                :dataShow = 'dataShow'
+                :dataYesShow = 'dataYesShow'
+                :dataName = 'dataName'
+            />
+        </el-col>
+    </el-row>
      <el-row   style="background:#061123;">
           <div class="margin">
             <el-col   style="width:20.8vw;height:64.8vh;margin-left:1.82vw;"><record 
                   :totalSum = 'totalSum'
                   :chineseMe = 'chineseMe'
+                  :recordsTitle = 'recordsTitle'
             />
             <Proportion  :msg = 'title' 
                     :dragPro = 'dragPro'
@@ -28,6 +38,7 @@
             /><doubleLine 
                   :dataNumberSin = 'dataNumberSin'
                   :dataNumberDou = 'dataNumberDou'
+                  :titledouble = 'titledouble'
             /></el-col>
           </div>
      </el-row> 
@@ -37,26 +48,31 @@
 <script>
 import guideBar from '../components/guideBar'
 import Header from '../components/Header'
-import dataShow from '../components/dataShow'
+import dataLogo from '../components/dataLogo'
 import Proportion from '../components/Proportion'
 import singleLine from  '../components/singleLine'
 import centerSider from '../components/centerSider'
 import record from '../components/recordsConsumption'
 import doubleLine from '../components/doubleLine'
+import lastData from '../components/lastData'
 export default {
     name:'epidemic',
      components:{
-       Header,dataShow,Proportion,centerSider,singleLine,record,doubleLine,guideBar
+       Header,dataLogo,Proportion,centerSider,singleLine,record,doubleLine,guideBar,lastData
   },
    data(){
     return{
         title:'药占比',
         test:'',
-        titlesin:'2019年门诊次数汇总',
+        recordsTitle:'上月发热人次和门诊人次对比',
+        titlesin:'当月门诊发热就医用户趋势',
+        titledouble:'门诊发热人次对比',
         dataTimeSin:[],    //时间的数量
         dataNumberSin:[],  //每个月的数量
         maxSin:1200000,
         intervalSin:200000,
+        dataTitle:'丽水市疫情分析',
+        dataName:['发热人次','肺炎人次','上呼吸道感染人次','呼吸道症状人次'],
         dragPro:[],  //门诊收费金额 药品收费金额  药占比
         dataShow:[], // 门诊人数 ， 处方总数 ， 门诊电子病历 ，门诊收费金额
         dataYesShow:[], // 同上哈

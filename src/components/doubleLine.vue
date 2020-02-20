@@ -1,7 +1,7 @@
 <template>
     <div id="single">
              <div class="center_right_title">
-                <p>{{msg}}</p>
+                <p>{{titledouble}}</p>
             </div>
             <div class="center_right_two" :style="{width:width+'vw',height:height+'vh'}">
                 <div id="bxt"  :style="{width:width+'vw',height:height+'vh'}" ></div>   
@@ -39,7 +39,12 @@ export default {
         intervalDou:{
         type:Number,
         default:200000
-    },
+        },
+        titledouble:{
+            type:String,
+            default:'2018-2019门诊收费金额对比'
+        }
+
     },
     data(){
             return{

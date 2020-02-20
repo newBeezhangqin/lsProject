@@ -1,7 +1,7 @@
 <template>
     <div id="record">
         <div class="leftSider_left_title">
-            <p>四周处方数量对比</p>
+            <p>{{recordsTitle}}</p>
         </div>
         <div class="leftSider_left_info" id="histogram">
            
@@ -28,6 +28,10 @@ export default {
         intervalRec:{
             type:Number,
             default:50000,
+        },
+        recordsTitle:{
+            type:String,
+            default:'四周处方数量对比'
         }
     },
       computed:{

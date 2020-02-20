@@ -24,13 +24,14 @@ module.exports = {
               '^/douban':'v2',// axios 访问/douban/v2 == target + /v2
             }
           },
-          '/music':{
-              target:'https://api.apiopen.top',
-              changeOrigin:true,
-              pathRewrite:{
-                   '^/music':'searchMusic'
-              }
-          }
+         '/test':{
+           target:'http://10.178.227.93:1112',
+           changeOrigin :true ,
+           pathRewrite :{
+            '^/test':'/api/home'
+           }
+         }
+          
         }
         // before: app => {}
      

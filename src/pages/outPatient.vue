@@ -9,7 +9,7 @@
              />
              </el-col>
         <el-col  style="width:75vw;background:#061123;margin:0;padding:0" >
-            <lastData 
+            <dataLast 
                 :dataShow = 'dataShow'
                 :dataYesShow = 'dataYesShow'
             />
@@ -18,11 +18,11 @@
     
      <el-row   style="background:#061123;">
           <div class="margin">
-            <el-col   style="width:20.8vw;height:64.8vh;margin-left:1.82vw;"><record 
+            <el-col   style="width:20.8vw;height:64.8vh;margin-left:1.82vw;"><weekContrast 
                   :totalSum = 'totalSum'
                   :chineseMe = 'chineseMe'
             />
-            <Proportion  :msg = 'title' 
+            <dragPro  :msg = 'title' 
                     :dragPro = 'dragPro'
             /></el-col>
             <el-col   style='width:36.3vw;height:73.1vh; margin-left:9.6vw;margin-right:9.6vw'><centerSider
@@ -44,19 +44,19 @@
   </div> 
 </template>
 <script>
-import guideBar from '../components/guideBar'
-import Header from '../components/Header'
-import dataLogo from '../components/dataLogo'
-import Proportion from '../components/Proportion'
-import singleLine from  '../components/singleLine'
-import centerSider from '../components/centerSider'
-import record from '../components/recordsConsumption'
-import doubleLine from '../components/doubleLine'
-import lastData from '../components/lastData'
+import guideBar from '../components/otherComp/guideBar'
+import Header from '../components/otherComp/Header'
+import dataLogo from '../components/dataShow/dataLogo'
+import dataLast from '../components/dataShow/dataLast'
+import dragPro from '../components/leftComp/dragPro'
+import weekContrast from '../components/leftComp/weekContrast'
+import singleLine from  '../components/rightComp/singleLine'
+import doubleLine from '../components/rightComp/doubleLine'
+import centerSider from '../components/otherComp/centerSider'
 export default {
-  name:'outCity',
+  name:'outPatient',
    components:{
-       Header,dataLogo,Proportion,centerSider,singleLine,record,doubleLine,guideBar,lastData
+       Header,dragPro,centerSider,singleLine,weekContrast,doubleLine,guideBar,dataLogo,dataLast
   },
    data(){
     return{
@@ -65,6 +65,7 @@ export default {
         titlesin:'2019年门诊次数汇总',
         dataTimeSin:[],    //时间的数量
         dataNumberSin:[],  //每个月的数量
+        dataTitle:'丽水市门诊数据表',
         maxSin:1200000,
         intervalSin:200000,
         dragPro:[],  //门诊收费金额 药品收费金额  药占比

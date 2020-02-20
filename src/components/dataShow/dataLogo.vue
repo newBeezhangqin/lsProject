@@ -54,7 +54,7 @@ export default {
     overflow: hidden;
     width: 18.54vw;height:9.4vh;
     margin:0px 4.47vw 0 2.23vw;
-    background: url(../assets/img/logo@2x.png) no-repeat center;
+    background: url(../../assets/img/logo@2x.png) no-repeat center;
     /* background-size:18.54vw 9.4vh; */
     background-size: contain;
     position: relative;

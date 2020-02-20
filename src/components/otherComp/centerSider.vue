@@ -255,7 +255,7 @@ export default {
                         break;
                     }
                   that.$router.push({
-                      path:'/yunhehos',
+                      path:'/diveCountry',
                       query:{
                            name:a.name,
                            code:countryCode
@@ -276,7 +276,7 @@ export default {
     width:36.3vw;height:73.1vh
 }
  .center_cen .center_cen_title{   
-    width:20.8vw ;height: 4.1vh;background: url(../assets/img/外框\ 3@2x.png) no-repeat center;
+    width:20.8vw ;height: 4.1vh;background: url(../../assets/img/外框\ 3@2x.png) no-repeat center;
     background-size: contain;
     text-align: center; margin-left: 7.5vw;
     position: relative;

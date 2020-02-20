@@ -9,8 +9,24 @@ Vue.config.productionTip = false      //是否请求跨域
 import router from './plugins/router'
 import echarts from 'echarts'
 import  './plugins/axios'
-import baseUrl from './plugins/baseUrl';
-Vue.prototype.baseURL = baseUrl;
+import Axios from 'axios';
+// import baseUrl from './plugins/baseUrl';
+import {request} from './network/request';
+// console.log(request,'这是一个打印的')
+  request({
+     url:'/test',
+     params:{
+      StateTime:'2019-01-01',
+      EndTime :'2019-12-01'
+     }
+  }).then(res=>console.log(res.data,'12312312312'))
+// Axios({
+//    url:'/test',
+//    params:{
+//       StateTime:'2019-01-01',
+//       EndTime :'2019-12-01'
+//     }
+// }).then(res=>console.log(res.data,'123123123123e'))
 Vue.prototype.$echarts = echarts  //  引入的echarts  挂到全局里面
 new Vue({
   router,

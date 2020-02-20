@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    name:'record', //消费纪律的
+    name:'weekConstrast', 
     props:{
         chineseMe:{
             type:Array,
@@ -193,7 +193,7 @@ export default {
     width:20.8vw;
     height:4.25vh;
     /* background:linear-gradient(90deg,rgba(2,89,130,0.29) 0%,rgba(3,96,140,0) 100%); */
-    background: url(../assets/img/外框2@2x.png) no-repeat center;
+    background: url(../../assets/img/外框2@2x.png) no-repeat center;
     background-size:  cover;
 }
  .leftSider_left_title p{

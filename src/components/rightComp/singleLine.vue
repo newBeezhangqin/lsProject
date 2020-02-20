@@ -198,7 +198,7 @@ export default {
     width:20.8vw;
     height:4.2vh;
     background-size: contain;
-    background: url(../assets/img/外框2@2x.png) no-repeat center;
+    background: url(../../assets/img/外框2@2x.png) no-repeat center;
 }
 .one{
     margin-top:0px;

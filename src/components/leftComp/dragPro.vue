@@ -1,21 +1,22 @@
 <template>
-    <div id="leftSider" :style="{width:width +'px',marginTop:margin+'px'}">
+    <div id="leftSider" :style="{width:width +'vw',marginTop:margin+'vh'}">
         <div class="leftSider_left">
+          
         <div class="leftSider_left_title nannv" >
             <p>{{title}}</p>
         </div>
-        <div class="leftSider_left_people"  :class="one" :style="{height:height+'px'}">
+        <div class="leftSider_left_people"  :class="one" :style="{height:height+'vh'}">
                <div class="people_top pone">
                    <p class="small">门诊收费金额</p>
-                   <span>35385.54</span>
+                   <span>{{dragPro[0]}}</span>
                </div>
                  <div class="people_top ptwo">
                    <p class="small">药品收费金额</p>
-                   <span>25487.65</span>
+                   <span>{{dragPro[1]}}</span>
                </div>
                  <div class="people_top pthree">
-                   <p class="small" id="tebie">药占比</p>
-                   <span id="tebie1">65.12%</span>
+                   <p class="small">药占比</p>
+                   <span>{{dragPro[2]}}</span>
                </div>
                <div class="people_echarts" id="people">
 
@@ -36,11 +37,11 @@ export default {
       },
       width:{
           type:[String,Number],
-          default:404,
+          default:21,
       },
       height:{
           type:[String,Number],
-          default:322,
+          default:29.8,
       },
       back:{
         type:String,
@@ -52,27 +53,42 @@ export default {
       },
       one:{
         type:String,
-        default:'two'
+        default:'one'
       },
       margin:{
         type:Number,
         default:0,
+      },
+      dragPro:{
+        type:Array,
+        default:[]
       }
     },
     data(){
         return{
-            name:''
+            name:'',
+            // dragProLast:dragPro
         }
     },
+    watch:{
+      dragPro:{
+        handler(){
+            this.echart();
+        }
+      }
+    },
     mounted(){
-        this.echart();
+        //  this.hhh();
     },
     methods:{
+        // hhh(){
+        //      this.dragProLast = this.dragProLast.toFixed(2);
+        // },
         echart(){
            var myChart = this.$echarts.init(document.getElementById('people'));
-      var   option = {
+        var   option = {
             title: {
-              text: '65.12%',
+              text: this.dragPro[2],
               x: 'center',
               y: 'center',
               textStyle: {
@@ -149,78 +165,63 @@ export default {
 
 <style scoped>
 .span_left{
-    margin-right:20px;
+    margin-right:1vw;
 }
 .people_echarts{
-    width: 306px;height: 306px;
+    width: 8.3vw;height: 14.8vh;
      position: absolute;
-    left: 234px;top:10px;;
+    left: 11.9vw;top:14.8vh;
 }
 .leftSider_left_people .people_top{display: flex
 
 }
 .leftSider_left_people .people_top span{
-    width:88px;
-    height:22px;
-    font-size:30px;
+    width:4.5vw;
+    height:2vh;
+    font-size:2rem;
     font-family:Agency FB;
     font-weight:400;
     color:rgba(0,204,255,1);
 }
 .leftSider_left_people .people_top p{
-    margin-right: 25px;
-    margin-top: 10px;
-    width:90px;
-    font-size:12px;
+    margin-right: 1.3vw;
+    margin-top: 1vh;
+    width:5.6vw;
+    font-size:.9rem;
     font-family:Microsoft YaHei;
     font-weight:400;
     color:rgba(132,149,194,1);
-    margin-left: 26px;
+    margin-left: 1.3vw;
 }
 .pone{
-    padding-top: 61px;
+    padding-top: 2.7vh;
 }
 .ptwo{
-    padding-top: 18px
+    padding-top: 28px
 }
 .pthree{
-  padding-top: 100px;
+padding-top: 26px;
 }
-#tebie{
-    width:60px;
-    height:20px;
-    font-size:20px;
-    font-family:Microsoft YaHei;
-    font-weight:400;
-    color:rgba(136,149,190,1);
-}
-#tebie1{
-    width:88px;
-    height:32px;
-    font-size:40px;
-    font-family:Agency FB;
-    font-weight:400;
-    color:rgba(99,202,250,1);
-    margin-left:  20px;
-}
+
 .two{
   /* background: url(../assets/img/外框@2x1.png) no-repeat center; */
   background:linear-gradient(-39deg,rgba(12,116,214,0.1),rgba(19,50,121,0.1));
 }
 .leftSider_left .leftSider_left_title{
     overflow: hidden;
-    width:400px;
-    height:46px;
-    background: url(../assets/img/外框2@2x.png) no-repeat center;
+    width:20.8vw;
+    height:4.25vh;
+    background-size: cover;
+    background: url(../../assets/img/外框2@2x.png) no-repeat center;
 }
  .leftSider_left .leftSider_left_title p{
     /* width:96px;
     height:16px; */
-    font-size:16px;
+    font-size : 1rem;
     font-family:PingFang SC;
     font-weight:400;
     color:rgba(0,204,255,1);
-    margin: 12px 0 0 20px;
+     margin: 1.1vh 0 0 1.04vw;
 }
 .leftSider_left .leftSider_left_title.nannv{
     margin-top: 20px;

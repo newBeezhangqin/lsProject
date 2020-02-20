@@ -7,7 +7,7 @@
              />
              </el-col>
         <el-col  style="width:75vw;background:#061123;margin:0;padding:0" >
-            <lastData 
+            <dataLast 
                 :dataShow = 'dataShow'
                 :dataYesShow = 'dataYesShow'
             />
@@ -15,13 +15,13 @@
     </el-row>
   <el-row  style="background:#061123;">
         <div class="test">
-             <el-col   style="width:20.8vw;height:64.8vh;margin-left:1.82vw;"><record 
+             <el-col   style="width:20.8vw;height:64.8vh;margin-left:1.82vw;"><weekContrast
                   :totalSum = 'totalSum'
                   :chineseMe = 'chineseMe'
                   :maxRec= 'maxRec'
                   :intervalRec = 'intervalRec'
             />
-            <Proportion  :msg = 'title' 
+            <dragPro  :msg = 'title' 
                          :dragPro = 'dragPro'
              /></el-col>
           <el-col  style='width:36.3vw;height:73.1vh; margin-left:9.6vw;margin-right:9.6vw'><centerSider  :nameCountry = 'nameCountry' 
@@ -48,16 +48,19 @@
   </div>
 </template>
 <script>
-import Header from '../components/Header'
-import dataLogo from '../components/dataLogo'
-import Proportion from '../components/Proportion'
-import singleLine from  '../components/singleLine'
-import centerSider from '../components/centerSider'
-import record from '../components/recordsConsumption'
-import doubleLine from '../components/doubleLine'
-import lastData from '../components/lastData'
+import Header from '../components/otherComp/Header'
+import dataLogo from '../components/dataShow/dataLogo'
+import dataLast from '../components/dataShow/dataLast'
+import dragPro from '../components/leftComp/dragPro'
+import weekContrast from '../components/leftComp/weekContrast'
+import centerSider from '../components/otherComp/centerSider'
+import singleLine from  '../components/rightComp/singleLine'
+import doubleLine from  '../components/rightComp/doubleLine'
 export default {
-  name:'outCity',
+  name:'diveCountry',
+   components:{
+       Header,dataLogo,dragPro,centerSider,singleLine,weekContrast,doubleLine,dataLast
+  },
    data(){
     return{
         title:'药占比',
@@ -293,9 +296,7 @@ export default {
           
       },
   },
-  components:{
-       Header,dataLogo,Proportion,centerSider,singleLine,record,doubleLine,lastData
-  }
+ 
 }
 </script>
 

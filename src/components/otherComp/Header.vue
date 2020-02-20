@@ -1,16 +1,20 @@
 <template>
     <div id="Header">
-        <div class="margin">
-        <div class="map_title">
+     <el-row>
+        <el-col :span="24">
+         <div class="map_title">
             <span class="title_time">
                 {{gettime}}
             </span>
-            <!-- <span class="title_time_right" @click='$router.go(-1)' >
+            <span class="title_time_right" @click='$router.go(-1)' >
                     返回上一级
-                    还需要某个东西进去控制 返回上一级的显示和隐藏
-            </span> -->
+                    <!-- 还需要某个东西进去控制 返回上一级的显示和隐藏 -->
+            </span>
         </div>
-        </div>
+      
+        </el-col>
+    </el-row>
+     
     </div>
 </template>
 
@@ -68,42 +72,34 @@ export default {
 #Header{ 
     position: relative;
     background: #061123;
-    height: 95px;
-}
-.margin{
-        margin: 0 auto; width: 1920px;
+    height: 8.8vh;
 }
 .map_title{
-     overflow: hidden; height: 95px;
-    background: url(../assets/img/title@2x.png) no-repeat center;
+     overflow: hidden; height: 8.8vh;width: 100vw;
+    background: url(../../assets/img/title@2x.png) no-repeat center;
+    background-size: 100vw 8.8vh;
     overflow: hidden;
     position: relative;
 }
 .map_title .title_time{
     position: absolute;
     color: #0AB7FF;
-    width:300px;
-    height:14px;
-    font-size:14px;
+    height:1.3vh;
+    font-size:.9rem;
     font-family:Roboto;
     font-weight:400;
     color:rgba(10,183,255,1);
-    left:36px;top: 18px;
+    left:1.875vw;top: 1.2vh;
 }
 .map_title .title_time_right{
     position: absolute;
     color:rgba(255,255,255,1);
-    width:92px;
-    height:18px;
-    font-size:16px;
+    height:1.67vh;
+    font-size:.9rem;
     font-family:Microsoft YaHei;
     font-weight:400;
-    right: 40px;top:13px;
+    right: 2.1vw;top:1.2vh;
     cursor:pointer
-
 }
-/* .map_title span.time_right{
-    right: 0;top: 18px;
-} */
 
 </style>

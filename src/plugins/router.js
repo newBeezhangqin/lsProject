@@ -4,19 +4,19 @@ Vue.use(VueRouter);
 // export default  
 import Login from '../pages/Login'
 
-const  outPatient = () => import  ('../pages/outPatient')
-const  countryHos = () => import  ('../pages/countryHos')
-const  yunheHos = () => import  ('../pages/yunheHos')
-const  epidemic  = () => import('../pages/Epidemic')  // 路由懒加载 
-const test = ()=> import  ('../pages/test')
+const  outPatient = () => import  ('../pages/outPatient')   // 门诊
+// const  countryHos = () => import  ('../pages/countryHos')   // 医院
+const  diveCountry = () => import  ('../pages/diveCountry')  // 下潜到县级
+// const  epidemic  = () => import('../pages/Epidemic')  // 路由懒加载 
+// const test = ()=> import  ('../pages/test')
 let routes = [
     // 配置路由的页面的设置
     {path:'/',redirect:'/outpatient'},
-    {path:'/yunhehos',component:yunheHos},
+    {path:'/diveCountry',component:diveCountry},
     // {path:'/countryhos',component:countryHos},
     {path:'/outpatient',component:outPatient},
-    {path:'/epidemic',component:epidemic},
-    {path:'/test',component:test}
+    // {path:'/epidemic',component:epidemic},
+    // {path:'/test',component:test}
   
 ]
 

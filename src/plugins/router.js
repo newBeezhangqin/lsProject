@@ -17,7 +17,6 @@ let routes = [
     {path:'/outpatient',component:outPatient},
     // {path:'/epidemic',component:epidemic},
     // {path:'/test',component:test}
-  
 ]
 
 let router =  new VueRouter({  

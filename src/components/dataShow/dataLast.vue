@@ -70,7 +70,7 @@
      },
      methods:{
          test(){
-             console.log(this.dataName)
+            //  console.log(this.dataName)
          }
      },
      mounted(){
@@ -128,12 +128,13 @@
         margin-top: 4.2vh;
     }
     .content_data li .content_data_right .bottom{
+        display: block;
         font-size:12px;
         font-family:STHeiti SC;
         font-weight:300;
          white-space: nowrap;
         color:rgba(0,204,255,1);
-        margin-bottom: 3px;
+        padding-bottom: 3px;
     }
     .content_data li .content_data_right span{
         font-size:1.5rem;

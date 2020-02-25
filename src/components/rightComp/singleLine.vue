@@ -197,8 +197,8 @@ export default {
     overflow: hidden;
     width:20.8vw;
     height:4.2vh;
-    background-size: contain;
     background: url(../../assets/img/外框2@2x.png) no-repeat center;
+     background-size: cover;
 }
 .one{
     margin-top:0px;

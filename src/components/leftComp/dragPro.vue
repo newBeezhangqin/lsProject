@@ -2,7 +2,7 @@
     <div id="leftSider" :style="{width:width +'vw',marginTop:margin+'vh'}">
         <div class="leftSider_left">
           
-        <div class="leftSider_left_title nannv" >
+        <div class="leftSider_left_title" >
             <p>{{title}}</p>
         </div>
         <div class="leftSider_left_people"  :class="one" :style="{height:height+'vh'}">
@@ -208,11 +208,12 @@ padding-top: 26px;
   background:linear-gradient(-39deg,rgba(12,116,214,0.1),rgba(19,50,121,0.1));
 }
 .leftSider_left .leftSider_left_title{
+    margin-top: 1.85vh;
     overflow: hidden;
     width:20.8vw;
     height:4.25vh;
-    background-size: cover;
     background: url(../../assets/img/外框2@2x.png) no-repeat center;
+    background-size: cover;
 }
  .leftSider_left .leftSider_left_title p{
     /* width:96px;

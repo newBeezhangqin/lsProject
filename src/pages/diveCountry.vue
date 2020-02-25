@@ -1,7 +1,7 @@
 <template>
   <div id="outCity">
      <Header  />
-       <el-row type="flex" >
+       <el-row type="flex"  style="background:#061123;margin:0;padding:0">
         <el-col style ='width:25vw'> <dataLogo 
                 :dataTitle = 'dataTitle'
              />

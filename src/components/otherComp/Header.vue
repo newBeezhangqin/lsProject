@@ -7,8 +7,8 @@
                 {{gettime}}
             </span>
             <span class="title_time_right" @click='$router.go(-1)' >
-                    返回上一级
-                    <!-- 还需要某个东西进去控制 返回上一级的显示和隐藏 -->
+                    <!-- 返回上一级 -->
+                    <slot></slot>
             </span>
         </div>
       

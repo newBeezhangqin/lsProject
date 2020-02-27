@@ -2,7 +2,6 @@
   <div id="outCity">
     <guideBar />
      <Header />
-     
             <el-row type="flex" style="background:#061123;margin:0;padding:0">
         <el-col style ='width:25vw;background:#061123'> <dataLogo 
                 :dataTitle = 'dataTitle'
@@ -53,7 +52,7 @@ import singleLine from  '../components/rightComp/singleLine'
 import doubleLine from '../components/rightComp/doubleLine'
 import centerSider from '../components/otherComp/centerSider'
 import {getSingledata, request,handleData,getMonth} from '../network/request.js'  // 引入請求的函數 
-import {numTime,monthTime} from '../network/time.js'
+import {numTime,monthTime,changeTime} from '../network/time.js'
 export default {
   name:'outPatient',
    components:{
@@ -78,9 +77,8 @@ export default {
         dataNumberDou:[],
         time1:200,   // 获取的时间1  数字越大 代表的时间开始越早
         time2:60,   // 获取的时间2   
-        lastMonth:30, // 自动获取上个月的时间
         totalSum:[],
-        chineseMe:[],
+        chineseMe:[],  
     }
   },
   created(){
@@ -89,25 +87,13 @@ export default {
   watch:{
       getNewdate:{
           handler(newdata){
-              // console.log(newdata,'数据监听里面的data首页') 
-              //  再次触发 函数 并修改传入的参数 得到新的数据 最后进行渲染 
-              //  参数直接传入进行 不需要进行修改   拿到俩个日期直接进行天数的转换 
-              var one = newdata[0];
-              var two = newdata[1];
-              // console.log(one,two); //将俩个时间转换为 天数 并进行计算  
-              var now = new Date();  // 设置现在的时间
-              one = new Date(one.replace(/-/g, "/"));   //转换第一次的时间
-              two = new Date(two.replace(/-/g, "/"));   //转换第二次的时间
-              var getdays1 = now - one;        // 
-              var getdays2 = now - two;
-              var time1 = parseInt(getdays1 / (1000 * 60 * 60 * 24));   // 得到第一天相隔的时间
-              var time2 = parseInt(getdays2 / (1000 * 60 * 60 * 24));   //得到第二天相隔的时间 
-              // console.log(time1,time2)     // 125 84 
-              this.time2 = time2;
-              this.time1 = time1;  
-              this.chineseMe = [];
-              this.totalSum = []; 
-              this.getHomedata();   
+              // changeTime(newdata);
+              var hhh = changeTime(newdata);
+              this.time2 = hhh[1];
+              this.time1 = hhh[0];  
+              this.chineseMe = []; // 清除中医处方数组会拥挤
+              this.totalSum = [];  // 清除处方总数
+              this.getHomedata();  //时间修改后重新请求函数
           }
       },
   },
@@ -115,34 +101,16 @@ export default {
      this.getFiexdata();
   },
   methods:{
-         //获取选择的时间的函数 绑定监听
       getChoiceData(data){
-            // console.log(data,'这个首页页面里面')  //拿到子传过来的数据
             this.getNewdate = data; 
         },
-      //书写跳转的函数
-      makeDate(dayNumber){
-        var day1 = new Date();
-            day1.setTime(day1.getTime()-24*60*60*1000*dayNumber);
-            function conver(s) {
-              return s < 10 ? '0' + s : s;
-            }
-             if(dayNumber == 30){
-                var s2  = day1.getFullYear()+"-" + conver((day1.getMonth()+1)) + "-" ;
-                return s2;
-                }
-               var s1 = day1.getFullYear()+"-" + conver((day1.getMonth()+1)) + "-" + conver(day1.getDate());
-              return s1;    
-      }, 
     getHomedata(){    //请求动态时间的函数
-          // 传入 数字返回 数据
-          console.log(this.time1,'time1')
       getSingledata({     
-        url:'/api',params:{
+        url:'http://10.178.227.93:1112/api/home/HomeData',params:{
             StateTime:numTime(this.time1),
             EndTime:numTime(this.time1),
         }
-      }).then(res=>{
+         }).then(res=>{
           console.log(res.data.data[0].data,'请求动态的数据')
           // hhh 5号为 药占比  6号为 门诊收费金额  hhh0 hhh1
           //  0 门诊人次 1 当年的门诊人次 2 处方总数 3 中医处方 4 门诊电子病历 5 药占比 6 门诊收费金额  
@@ -157,14 +125,13 @@ export default {
             console.log(hhh,'123')
           // 门诊人数 ， 处方总数 ， 门诊电子病历 ，门诊收费金额 
           this.dataShow = [numPatient,tolPrescription,electronicPatient,dragMoney]
-
       })
-        getSingledata({     // 请求上个月的数据
-        url:'/api',params:{
+
+       getSingledata({     // 请求上个月的数据
+        url:'http://10.178.227.93:1112/api/home/HomeData',params:{
             StateTime:monthTime(this.time1)[0],
             EndTime:monthTime(this.time1)[1],
-        }
-      }).then(res=>{
+        }}).then(res=>{
           console.log(res.data.data[0].data,'上月的总数的数据')
         //  0 门诊人次 1 当年的门诊人次 2 处方总数 3 中医处方 4 门诊电子病历 5 药占比 6 门诊收费金额  
             var hhh =  handleData(res.data.data[0].data,[0,2,4,6])
@@ -175,7 +142,7 @@ export default {
             var outPatMoney = hhh[3].门诊收费金额.toFixed(2);
             this.dataYesShow = [numPatient,tolPrescription,electronicPatient,outPatMoney]
 
-      })
+       })
 
       // 请求 前四周的 数据
       getMonth(this.time1).then(res=>{
@@ -190,13 +157,13 @@ export default {
         var traditionalPrescription3 = handleData(res[3],[3])[0].中医处方数量
         this.totalSum = [tolPrescription0,tolPrescription1,tolPrescription2,tolPrescription3]
         this.chineseMe = [traditionalPrescription0,traditionalPrescription1,traditionalPrescription2,traditionalPrescription3]
-      })
+        })
       },
       
       getFiexdata(){    //请求18年和19年的 门诊就医数量
           var   StateTime = '2019-01-01'
           var   EndTime = '2019-12-31' 
-          const  url =  '/api'
+          const  url =  'http://10.178.227.93:1112/api/home/HomeData'
           getSingledata({url,params:{StateTime,EndTime}}).then(res=>{
               var hhh  =    handleData(res.data.data[0].data,[1]);  
                hhh[0].forEach((item,index) => {

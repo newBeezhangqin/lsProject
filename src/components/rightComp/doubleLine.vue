@@ -85,7 +85,7 @@ export default {
                                 this.dataNumberSin
                               ]
                       }
-                    var color = ['rgba(236,97,0', 'rgba(37,147,97']
+                    var color = ['#EB6100', '#32B16C']
                     var lineY = []
 
                     for (var i = 0; i < charts.names.length; i++) {
@@ -96,21 +96,8 @@ export default {
                         var data = {
                             name: charts.names[i],
                             type: 'line',
-                            color: color[x] + ')',
+                            color: color[x],
                             smooth: true,
-                            areaStyle: {
-                                normal: {
-                                    color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                        offset: 0,
-                                        color: color[x] + ', 0.0)'
-                                    }, {
-                                        offset: 0.8,
-                                        color: color[x] + ', 0)'
-                                    }], false),
-                                    shadowColor: '#000',
-                                    shadowBlur: 10
-                                }
-                            },
                             symbol: 'circle',
                             symbolSize: 5,
                             data: charts.value[i]

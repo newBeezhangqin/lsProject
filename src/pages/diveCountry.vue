@@ -1,6 +1,8 @@
 <template>
   <div id="outCity">
-     <Header  />
+     <Header>
+       <slot>返回上一级</slot>
+     </Header>
        <el-row type="flex"  style="background:#061123;margin:0;padding:0">
         <el-col style ='width:25vw'> <dataLogo 
                 :dataTitle = 'dataTitle'
@@ -56,6 +58,8 @@ import weekContrast from '../components/leftComp/weekContrast'
 import centerSider from '../components/otherComp/centerSider'
 import singleLine from  '../components/rightComp/singleLine'
 import doubleLine from  '../components/rightComp/doubleLine'
+import {getSingledata, request,handleData,getMonth} from '../network/request.js'  // 引入請求的函數 
+import {numTime,monthTime,changeTime} from '../network/time.js'
 export default {
   name:'diveCountry',
    components:{
@@ -67,7 +71,7 @@ export default {
         nameCountry:this.$route.query.name,
         nameCode : this.$route.query.code,
         getNewdate:'',
-         dataTimeSin:[],    //时间的数量
+        dataTimeSin:[],    //时间的数量
         dataNumberSin:[],
         maxSin:200000,
         intervalSin:50000,
@@ -86,217 +90,103 @@ export default {
         chineseMe:[],
         maxRec:60000,
         intervalRec:10000,
-       
     }
   },
   methods:{
-            makeDate(dayNumber){    //获取时间的函数
-                var day1 = new Date();
-                    day1.setTime(day1.getTime()-24*60*60*1000*dayNumber);
-                    function conver(s) {
-                      return s < 10 ? '0' + s : s;
-                    }
-                    if(dayNumber == 30){
-                        var s2  = day1.getFullYear()+"-" + conver((day1.getMonth()+1)) + "-" ;
-                        return s2;
-                        }
-                      var s1 = day1.getFullYear()+"-" + conver((day1.getMonth()+1)) + "-" + conver(day1.getDate());
-                      return s1;    
-                  // 1 是昨天的数据  时间  2 为前天的时间
-              },
-          //页面获取数据
-          getCountryData(){
-              axios({     //获取前三天的数据
-                url:'/api',
-                  params:{  
-                    StateTime:this.makeDate(this.time1), //当前日期减去三天 为当前天数
-                    EndTime:this.makeDate(this.time1),  
-                    City:this.nameCode
-                }
-              }).then(res=>{
-                        console.log(res.data.data[0].data,'县级昨天的数据')
-                var newData = res.data.data[0].data
-                console.log(newData[0].SelectItmeList[0].门诊人次,'县级昨天门诊人次');
-                console.log(newData[2].SelectItmeList[0].处方总数,'县级昨天处方总数');
-                console.log(newData[4].SelectItmeList[0].门诊电子病历,'县级昨天电子病历');
-                console.log(newData[6].SelectItmeList[0].门诊收费金额,'县级昨天门诊收费金额');
-                 var outPatinet = newData[6].SelectItmeList[0].门诊收费金额 ?  newData[6].SelectItmeList[0].门诊收费金额.toFixed(2) : ' '
-                this.dataShow = [newData[0].SelectItmeList[0].门诊人次,newData[2].SelectItmeList[0].处方总数,newData[4].SelectItmeList[0].门诊电子病历,outPatinet]
-                console.log(this.dataShow)
-                 var dragPro = res.data.data[0].data;
-                  console.log(dragPro[5].SelectItmeList[0].药占比,'药占比')
-                  console.log(dragPro[6].SelectItmeList[0].门诊收费金额,'门诊收费金额')
-                  //药品收费金额
-                    var  yaop = dragPro[6].SelectItmeList[0].门诊收费金额/ dragPro[5].SelectItmeList[0].药占比;   
-                  var hhh = yaop ? yaop.toFixed(2)  : ''
-                   var Pro = dragPro[5].SelectItmeList[0].药占比 ? dragPro[5].SelectItmeList[0].药占比.toFixed(2) +'%' : '';
-            //  console.log(yaop,'药品')
-                   var  money = dragPro[6].SelectItmeList[0].门诊收费金额 ? dragPro[6].SelectItmeList[0].门诊收费金额.toFixed(2): '';
-                    this.dragPro = [money,hhh,Pro]
-              })
-              axios({
-                url:'/api',
-                 params:{  
-                     StateTime:this.makeDate(30+this.time1)+'01',
-                     EndTime:this.makeDate(this.time1)+'30', 
-                     City:this.nameCode
-                }
-              }).then(res=>{
-                     console.log(res.data.data[0].data,'上个月的数据')
-               var newData = res.data.data[0].data
-                console.log(newData[0].SelectItmeList[0].门诊人次,'上个月门诊人次');
-                console.log(newData[2].SelectItmeList[0].处方总数,'上个月处方总数');
-                console.log(newData[4].SelectItmeList[0].门诊电子病历,'上个月电子病历');
-                console.log(newData[6].SelectItmeList[0].门诊收费金额,'上个月门诊收费金额');
-              this.dataYesShow = [newData[0].SelectItmeList[0].门诊人次,newData[2].SelectItmeList[0].处方总数,newData[4].SelectItmeList[0].门诊电子病历,newData[6].SelectItmeList[0].门诊收费金额.toFixed(2)]
-              })
-             //书写请求前四周的数据
-              axios({  //请求当前的前一周
-                url:'/api',
-                params:{
-                  StateTime:this.makeDate(this.time1+7),
-                  EndTime:this.makeDate(this.time1),
-                  City:this.nameCode
-                }
-         }).then(
-           res=>{
-                 console.log(res.data.data[0].data,'首页上一周的数据') // 需要的数据为处方总量和 中医处方
-                   var newData = res.data.data[0].data
-                   console.log(newData[2].SelectItmeList[0].处方总数,'上一周处方总数');
-                    console.log(newData[3].SelectItmeList[0].中医处方数量,'上一周处方总量');
-                   this.totalSum.push(newData[2].SelectItmeList[0].处方总数);
-                   this.chineseMe.push(newData[3].SelectItmeList[0].中医处方数量);
-           }
-         )
-          axios({  //请求当前的 前二周 
-                url:'/api',
-                params:{
-                  StateTime:this.makeDate(this.time1+14),
-                  EndTime:this.makeDate(this.time1+7),
-                  City:this.nameCode
-                }
-         }).then(
-           res=>{
-                 console.log(res.data.data[0].data,'首页上二周的数据') // 需要的数据为处方总量和 中医处方
-                   var newData = res.data.data[0].data
-                  console.log(newData[2].SelectItmeList[0].处方总数,'上二周处方总数');
-                  console.log(newData[3].SelectItmeList[0].中医处方数量,'上二周处方总量');
-                   this.totalSum.push(newData[2].SelectItmeList[0].处方总数);
-                   this.chineseMe.push(newData[3].SelectItmeList[0].中医处方数量);
-                   axios({  // 前三周 
-                url:'/api',
-                params:{
-                  StateTime:this.makeDate(this.time1+21),
-                  EndTime:this.makeDate(this.time1+14),
-                  City:this.nameCode
-                }
-         }).then(
-           res=>{
-                 console.log(res.data.data[0].data,'首页上三周的数据') // 需要的数据为处方总量和 中医处方
-                   var newData = res.data.data[0].data
-                    console.log(newData[2].SelectItmeList[0].处方总数,'上三周处方总数');
-                   console.log(newData[3].SelectItmeList[0].中医处方数量,'上三周处方总量');
-                   this.totalSum.push(newData[2].SelectItmeList[0].处方总数);
-                   this.chineseMe.push(newData[3].SelectItmeList[0].中医处方数量);
+    getCountryData(){    // 请求动态的数据 
+      getSingledata({    //请求的当天的数据
+        url:'http://10.178.227.93:1112/api/home/HomeData',
+        params:{
+          StateTime:numTime(this.time1),
+          EndTime:numTime(this.time1),
+          City:this.nameCode
+        }
+        }).then(res=>{
+        console.log(res.data.data[0].data,'测试子页面的时间函数')
+        var hhh =  handleData(res.data.data[0].data,[5,6,0,2,4])
+        var dragMoney = (hhh[1].门诊收费金额/hhh[0].药占比).toFixed(2)   //药品收费金额
+        var dragPro = hhh[0].药占比.toFixed(2)      //药占比 
+        var outPatMoney = hhh[1].门诊收费金额.toFixed(2);
+        this.dragPro = [outPatMoney,dragMoney,dragPro]
+        var numPatient = hhh[2].门诊人次
+        var tolPrescription = hhh[3].处方总数
+        var electronicPatient = hhh[4].门诊电子病历
 
-                    axios({  // 前四周
-                url:'/api',
-                params:{
-                  StateTime:this.makeDate(this.time1+28),
-                  EndTime:this.makeDate(this.time1+21),
-                  City:this.nameCode
-                }
-         }).then(
-           res=>{
-                  console.log(res.data.data[0].data,'首页上四周的数据') // 需要的数据为处方总量和 中医处方
-                  var newData = res.data.data[0].data
-                  console.log(newData[2].SelectItmeList[0].处方总数,'上四周处方总数');
-                  console.log(newData[3].SelectItmeList[0].中医处方数量,'上四周处方总量');
-                   this.totalSum.push(newData[2].SelectItmeList[0].处方总数);
-                   this.chineseMe.push(newData[3].SelectItmeList[0].中医处方数量);
-                   console.log(this.chineseMe,'中医处方总量')
-                   console.log(this.totalSum,'处方总量')
-           }
-         )
-           }
-         )
-
-           }
-         )
-          },
-          getFixdata(){
-                    axios({    //获取当年xx县当年的数据 进行折现图的渲染 
-                url:'/api', 
-                params:{
-                  StateTime:'2019-01-01',
-                  EndTime:'2019-12-31',
-                  City:this.nameCode
-                }
-              }).then(res=>{
-                console.log(res.data.data[0].data,'获取数据')
-                  var newData = res.data.data[0].data;
-                  // 获取门诊次数及数量
-                for(var i =0;i<newData[1].SelectItmeList.length;i++){
-                 this.dataTimeSin.push(newData[1].SelectItmeList[i].月份)
-                 this.dataNumberSin.push(newData[1].SelectItmeList[i].当月门诊就医数量)
-                 }
-                 console.log(this.dataNumberSin,'县级去年的数据');
-                  
-              })
-               axios({
-                url:'/api',
-                 params:{
-                    StateTime:'2018-01-01',
-                    EndTime:'2018-12-31',
-                    City:this.nameCode
-                   }
-              }).then(res=>{
-                 console.log(res.data.data[0].data,'前年的数据')
-                 var newData = res.data.data[0].data
-                   for(var i =0;i<newData[1].SelectItmeList.length;i++){
-                      this.dataNumberDou.push(newData[1].SelectItmeList[i].当月门诊就医数量)
-                     }
-               console.log(this.dataNumberDou,'县级的前年数据')
-          })
-          },
-        
-          // 获取可选日期的函数
-        getChoiceData(data){
-            console.log(data,'这个父亲页面里面')  //拿到子传过来的数据
-            this.getNewdate = data;
-        },
+        // 门诊人数 ， 处方总数 ， 门诊电子病历 ，门诊收费金额 
+        this.dataShow = [numPatient,tolPrescription,electronicPatient,dragMoney]
+      })
+      getSingledata({  //请求上个月的数据
+        url:'http://10.178.227.93:1112/api/home/HomeData',
+          params:{  
+              StateTime:monthTime(this.time1)[0],
+              EndTime:monthTime(this.time1)[1],
+              City:this.nameCode
+        }
+        }).then(res=>{
+        //  0 门诊人次 1 当年的门诊人次 2 处方总数 3 中医处方 4 门诊电子病历 5 药占比 6 门诊收费金额  
+          var hhh =  handleData(res.data.data[0].data,[0,2,4,6])
+          console.log(hhh,'上个月的数据总数');
+          var numPatient = hhh[0].门诊人次;
+          var tolPrescription = hhh[1].处方总数
+          var electronicPatient = hhh[2].门诊电子病历
+          var outPatMoney = hhh[3].门诊收费金额.toFixed(2);
+          this.dataYesShow = [numPatient,tolPrescription,electronicPatient,outPatMoney]
+       })
+      getMonth(this.time1,this.nameCode).then(res=>{
+        var tolPrescription0 = handleData(res[0],[2])[0].处方总数
+        var tolPrescription1 = handleData(res[1],[2])[0].处方总数
+        var tolPrescription2 = handleData(res[2],[2])[0].处方总数
+        var tolPrescription3 = handleData(res[3],[2])[0].处方总数
+        var traditionalPrescription0 = handleData(res[0],[3])[0].中医处方数量
+        var traditionalPrescription1 = handleData(res[1],[3])[0].中医处方数量
+        var traditionalPrescription2 = handleData(res[2],[3])[0].中医处方数量
+        var traditionalPrescription3 = handleData(res[3],[3])[0].中医处方数量
+        this.totalSum = [tolPrescription0,tolPrescription1,tolPrescription2,tolPrescription3]
+        this.chineseMe = [traditionalPrescription0,traditionalPrescription1,traditionalPrescription2,traditionalPrescription3]
+      })
+    },
+    getFixdata(){
+      var   StateTime = '2019-01-01'
+      var   EndTime = '2019-12-31' 
+      const  url =  'http://10.178.227.93:1112/api/home/HomeData'
+      const City = this.nameCode
+      getSingledata({url,params:{StateTime,EndTime,City}}).then(res=>{
+          var hhh  =    handleData(res.data.data[0].data,[1]);  
+          hhh[0].forEach((item,index) => {
+                this.dataNumberSin.push(item.当月门诊就医数量)  // 19年的数据
+                this.dataTimeSin.push(item.月份)               //19年的月份
+          }); 
+      })  
+      var   StateTime = '2018-01-01'
+      var   EndTime = '2018-12-31' 
+      getSingledata({url,params:{StateTime,EndTime,City}}).then(res=>{
+            var hhh =  handleData(res.data.data[0].data,[1]);
+              hhh[0].forEach((item,index) => {
+                this.dataNumberDou.push(item.当月门诊就医数量)    //18年的数据
+              });
+            }
+          )
+      },
+    getChoiceData(data){
+        this.getNewdate = data;
   },
-  mounted(){
-          this.getCountryData();
-          this.getFixdata();
+  },
+mounted(){
+      this.getCountryData();
+      this.getFixdata();
   },
   watch:{
       getNewdate:{
           handler(newdata){
-              console.log(newdata,'数据监听里面的data') 
-              //  再次触发 函数 并修改传入的参数 得到新的数据 最后进行渲染 
-              //  参数直接传入进行 不需要进行修改
-              var one = newdata[0];
-              var two = newdata[1];
-              console.log(one,two); //将俩个时间转换为 天数 并进行计算  
-              var now = new Date();  // 设置现在的时间
-              one = new Date(one.replace(/-/g, "/"));   //转换第一次的时间
-              two = new Date(two.replace(/-/g, "/"));   //转换第二次的时间
-              var getdays1 = now - one;        // 
-              var getdays2 = now - two;
-              var time1 = parseInt(getdays1 / (1000 * 60 * 60 * 24));   // 得到第一天相隔的时间
-              var time2 = parseInt(getdays2 / (1000 * 60 * 60 * 24));   //得到第二天相隔的时间 
-              console.log(time1,time2)     // 125 84
-              this.time2 = time2;
-              this.time1 = time1;   
-              this.chineseMe = [];
-              this.totalSum = []; 
+              var hhh = changeTime(newdata);
+              this.time2 = hhh[1];
+              this.time1 = hhh[0];  
+              this.chineseMe = []; // 清除中医处方数组会拥挤
+              this.totalSum = [];  // 清除处方总数
               this.getCountryData();   
-          }
-          
+          } 
       },
   },
- 
 }
 </script>
 

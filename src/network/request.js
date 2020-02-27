@@ -49,46 +49,51 @@ export function handleData(newData,demand){
     return arr; 
 }
 // 处理月份的函数  需要的参数在params
-export  function getMonth(num){ 
-  const url = '/api' 
-  function one(num){
+export  function getMonth(num,City){ 
+ var City = City ? City : null ;
+  const url = 'http://10.178.227.93:1112/api/home/HomeData' 
+  function one(num,City){
        return axios({
-           url:'/api',
+           url:'http://10.178.227.93:1112/api/home/HomeData',
            params:{
                StateTime:numTime(num+7),
                 EndTime:numTime(num),
+                City
            }
     })
   }
-  function two(num){
+  function two(num,City){
     return axios({
-        url:'/api',
+        url:'http://10.178.227.93:1112/api/home/HomeData',
         params:{
             StateTime:numTime(num+14),
             EndTime:numTime(num+7),
+            City
         }
     })
   }
-  function three(num){
+  function three(num,City){
     return axios({
-        url:'/api',
+        url:'http://10.178.227.93:1112/api/home/HomeData',
         params:{
             StateTime:numTime(num+21),
             EndTime:numTime(num+14),
+            City
         }
     })
   }
-  function four(num){
+  function four(num,City){
     return axios({
-        url:'/api',
+        url:'http://10.178.227.93:1112/api/home/HomeData',
         params:{
             StateTime:numTime(num+28),
             EndTime:numTime(num+21),
+            City
         }
     })
   }
    return  new Promise((resolve,reject)=>{
-    const   a =    axios.all([one(num),two(num),three(num),four(num)])
+    const   a =    axios.all([one(num,City),two(num,City),three(num,City),four(num,City)])
          a.then(axios.spread(function(one1,two1,three1,four1){
            var res = [one1.data.data[0].data,two1.data.data[0].data,three1.data.data[0].data,four1.data.data[0].data]; 
             resolve(res);

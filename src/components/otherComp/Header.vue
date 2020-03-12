@@ -28,12 +28,7 @@ export default {
           
         }
     },
-    mounted(){
-    
-    },
     methods:{
-
-        //设置方法实时显示时间 奥利给
         getTime:function(){ 
             var _this = this;
             let yy = new Date().getFullYear();
@@ -59,7 +54,6 @@ export default {
        currentTime(){
            setInterval(this.getTime,500)
         },
-
       },
       created() {
         this.currentTime();    

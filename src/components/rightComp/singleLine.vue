@@ -14,20 +14,20 @@ export default {
   name: "singleLine", //单线的图  //记得修改样式哈
   props: {
     width: {
-      type: Number,
-      default: 20.2
+      type: String,
+      default: "20.2"
     },
     height: {
-      type: Number,
-      default: 28.8
+      type: String,
+      default: "28.8"
     },
     one: {
       type: String,
       default: "one"
     },
     margin: {
-      type: Number,
-      default: 0
+      type: String,
+      default: "0"
     },
     titlesin: {
       type: String,
@@ -35,7 +35,38 @@ export default {
     },
     dataTime: {
       type: Array,
-      default: () => []
+      default: () => [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ]
     },
     dataNumber: {
       type: Array,
@@ -50,15 +81,22 @@ export default {
       default: 200000
     }
   },
-  mounted() {},
+  mounted() {
+    this.firShow();
+  },
 
   computed: {
     sum: function() {
-      return [this.dataTime, this.dataNumber, this.intervalSin, this.maxSin]; //监听 四个函数
+      return [this.dataTime, this.dataNumber, this.intervalSin, this.maxSin]; //监听 四个
     }
   },
   watch: {
     sum: {
+      handler() {
+        this.firShow();
+      }
+    },
+    dataNumber: {
       handler() {
         this.firShow();
       }
@@ -76,7 +114,8 @@ export default {
         lineX: this.dataTime
       };
       var color = ["rgba(23, 255, 243"];
-      var lineY = ["5000", "10000", "15000", "20000", "25000", "30000"];
+      // var lineY = ["5000", "10000", "15000", "20000", "25000", "30000"];
+      var lineY = [];
       var data = {
         // name: '当月就医的人数',  去除上面的点点
         type: "line",
@@ -107,7 +146,25 @@ export default {
         },
         symbol: "circle",
         symbolSize: 5,
-        // data:  [7000,8000,9000,10000,11455,13000,15464,16000,17000,16000,15000,14000,15000,16000,17000,18000,19000]
+        // data: [
+        //   7000,
+        //   8000,
+        //   9000,
+        //   10000,
+        //   11455,
+        //   13000,
+        //   15464,
+        //   16000,
+        //   17000,
+        //   16000,
+        //   15000,
+        //   14000,
+        //   15000,
+        //   16000,
+        //   17000,
+        //   18000,
+        //   19000
+        // ]
         data: this.dataNumber
       };
       lineY.push(data);
@@ -176,6 +233,9 @@ export default {
         series: lineY
       };
       myChart.setOption(option);
+      window.addEventListener("resize", function() {
+        myChart.resize();
+      });
       setInterval(() => {
         myChart.setOption({
           legend: {
@@ -197,12 +257,29 @@ export default {
 };
 </script>
 <style scoped>
-.center_right_title {
+/* .center_right_title {
   overflow: hidden;
   width: 20.8vw;
   height: 4.2vh;
   background: url(../../assets/img/外框2@2x.png) no-repeat center;
   background-size: cover;
+} */
+.center_right_title {
+  overflow: hidden;
+  width: 20.8vw;
+  height: 4.3vh;
+  /* background:linear-gradient(90deg,rgba(2,89,130,0.29) 0%,rgba(3,96,140,0) 100%); */
+  background: url(../../assets/img/外框2@2x.png) no-repeat center;
+  background-size: cover;
+}
+.center_right_title p {
+  /* width:96px;
+    height:16px; */
+  font-size: 1rem;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 204, 255, 1);
+  margin: 1.1vh 0 0 0;
 }
 .one {
   margin-top: 0px;

@@ -4,7 +4,8 @@ Vue.use(VueRouter);
 const outPatient = () => import('../pages/outPatient') // 门诊
 const countryHos = () => import('../pages/countryHos') // 医院
 const diveCountry = () => import('../pages/diveCountry') // 下潜到县级
-// const  epidemic  = () => import('../pages/Epidemic')  // 路由懒加载 
+const epidemic = () => import('../pages/Epidemic') // 路由懒加载 
+const newDiveCountry = () => import('../pages/newDiveCountry')
 // const test = ()=> import  ('../pages/test') 
 let routes = [
     // 配置路由的页面的设置
@@ -24,8 +25,14 @@ let routes = [
         path: '/outpatient',
         component: outPatient
     },
-    // {path:'/epidemic',component:epidemic},
-    // {path:'/test',component:test}
+    {
+        path: '/epidemic',
+        component: epidemic
+    },
+    {
+        path: '/newdivecountry',
+        component: newDiveCountry
+    }
 ]
 
 let router = new VueRouter({

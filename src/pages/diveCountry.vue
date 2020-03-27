@@ -20,7 +20,7 @@
             :maxRec="maxRec"
             :intervalRec="intervalRec"
           />
-          <dragPro :msg="title" :dragPro="dragPro" />
+          <dragPro :msg="title" :dragPro="dragPro" style="marginTop:1.82vh" />
         </el-col>
         <el-col style="width:36.3vw;height:73.1vh; margin-left:9.6vw;margin-right:9.6vw">
           <centerSider :nameCountry="nameCountry" @sendNewdate="getChoiceData" :Days="time1" />
@@ -38,6 +38,7 @@
             :dataNumberDou="dataNumberDou"
             :maxDou="maxDou"
             :intervalDou="intervalDou"
+            style="marginTop:1.82vh"
           />
         </el-col>
       </div>
@@ -114,7 +115,7 @@ export default {
         console.log(res.data.data[0].data, "测试子页面的时间函数");
         var hhh = handleData(res.data.data[0].data, [5, 6, 0, 2, 4]);
         var dragMoney = (hhh[1].门诊收费金额 / hhh[0].药占比).toFixed(2); //药品收费金额
-        var dragPro = hhh[0].药占比.toFixed(2); //药占比
+        var dragPro = hhh[0].药占比.toFixed(2) + "%"; //药占比
         var outPatMoney = hhh[1].门诊收费金额.toFixed(2);
         this.dragPro = [outPatMoney, dragMoney, dragPro];
         var numPatient = hhh[2].门诊人次;

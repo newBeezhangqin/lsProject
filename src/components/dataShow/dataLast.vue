@@ -51,7 +51,7 @@ export default {
   props: {
     dataShow: {
       type: Array,
-      default: () => [2222222, 2222222, 2332223, 2323222]
+      default: () => [357, 68, 571, 1413]
     },
     dataYesShow: {
       type: Array,
@@ -128,7 +128,7 @@ export default {
 }
 
 .content_data li .content_data_right {
-  margin-top: 4.2vh;
+  margin-top: 3.8vh;
 }
 .content_data li .content_data_right .bottom {
   display: block;

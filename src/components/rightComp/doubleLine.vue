@@ -43,6 +43,27 @@ export default {
     titledouble: {
       type: String,
       default: "2018-2019门诊收费金额对比"
+    },
+    nameRes: {
+      type: Array,
+      default: () => ["去年", "今年"]
+    },
+    linex: {
+      type: Array,
+      default: () => [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ]
     }
   },
   data() {
@@ -62,20 +83,16 @@ export default {
       }
     }
   },
-  mounted() {},
   mounted() {
-    console.log(this.dataNumberSin, "单线的");
-    console.log(this.dataNumberDou, "双线的");
-    // this.secShow()
+    this.secShow();
   },
   methods: {
     secShow() {
       var secChart = this.$echarts.init(document.getElementById("bxt"));
       var charts = {
         unit: "(元)",
-        names: ["18年门诊", "19年门诊"], //设置数据名字
-
-        lineX: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+        names: this.nameRes, //设置数据名字
+        lineX: this.linex,
         //设置数据拿到11月和12月的数据
         value: [this.dataNumberDou, this.dataNumberSin]
       };
@@ -186,6 +203,9 @@ export default {
         });
       }, 5000);
       secChart.setOption(option);
+      window.addEventListener("resize", function() {
+        secChart.resize();
+      });
     }
   } //函数结束
 };
@@ -194,10 +214,19 @@ export default {
 .center_right_title {
   overflow: hidden;
   width: 20.8vw;
-  height: 4.2vh;
+  height: 4.3vh;
+  /* background:linear-gradient(90deg,rgba(2,89,130,0.29) 0%,rgba(3,96,140,0) 100%); */
   background: url(../../assets/img/外框2@2x.png) no-repeat center;
   background-size: cover;
-  margin-top: 1.85vh;
+}
+.center_right_title p {
+  /* width:96px;
+    height:16px; */
+  font-size: 1rem;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 204, 255, 1);
+  margin: 1.1vh 0 0 0;
 }
 .one {
   margin-top: 20px;

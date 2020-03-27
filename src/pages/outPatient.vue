@@ -14,7 +14,7 @@
       <div class="margin">
         <el-col style="width:20.8vw;height:64.8vh;margin-left:1.82vw;">
           <weekContrast :totalSum="totalSum" :chineseMe="chineseMe" />
-          <dragPro :msg="title" :dragPro="dragPro" />
+          <dragPro :msg="title" :dragPro="dragPro" style="marginTop:1.82vh" />
         </el-col>
         <el-col style="width:36.3vw;height:73.1vh; margin-left:9.6vw;margin-right:9.6vw">
           <centerSider @sendNewdate="getChoiceData" :Days="time1" />
@@ -27,7 +27,11 @@
             :maxSin="maxSin"
             :intervalSin="intervalSin"
           />
-          <doubleLine :dataNumberSin="dataNumberSin" :dataNumberDou="dataNumberDou" />
+          <doubleLine
+            :dataNumberSin="dataNumberSin"
+            :dataNumberDou="dataNumberDou"
+            style="marginTop:1.82vh"
+          />
         </el-col>
       </div>
     </el-row>
@@ -123,7 +127,7 @@ export default {
         url: "/api",
         params: {
           StateTime: numTime(this.time1),
-          EndTime: numTime(this.time1)
+          EndTime: numTime(this.time2)
         }
       }).then(res => {
         console.log(res.data.data[0].data, "请求动态的数据");
@@ -131,7 +135,7 @@ export default {
         //  0 门诊人次 1 当年的门诊人次 2 处方总数 3 中医处方 4 门诊电子病历 5 药占比 6 门诊收费金额
         var hhh = handleData(res.data.data[0].data, [5, 6, 0, 2, 4]);
         var dragMoney = (hhh[1].门诊收费金额 / hhh[0].药占比).toFixed(2); //药品收费金额
-        var dragPro = hhh[0].药占比.toFixed(2); //药占比
+        var dragPro = hhh[0].药占比.toFixed(2) + "%"; //药占比
         var outPatMoney = hhh[1].门诊收费金额.toFixed(2);
         this.dragPro = [outPatMoney, dragMoney, dragPro];
         var numPatient = hhh[2].门诊人次;
@@ -156,8 +160,8 @@ export default {
       }).then(res => {
         console.log(res.data.data[0].data, "上月的总数的数据");
         //  0 门诊人次 1 当年的门诊人次 2 处方总数 3 中医处方 4 门诊电子病历 5 药占比 6 门诊收费金额
+        // console.log(hhh, "上个月的数据总数");
         var hhh = handleData(res.data.data[0].data, [0, 2, 4, 6]);
-        console.log(hhh, "上个月的数据总数");
         var numPatient = hhh[0].门诊人次;
         var tolPrescription = hhh[1].处方总数;
         var electronicPatient = hhh[2].门诊电子病历;

@@ -1,7 +1,7 @@
 <template>
   <div id="hisTitle">
     <span class="title">{{hosNameArr}}</span>
-    <span class="time" @click="chioseTime">{{nowTime}}</span>
+    <span class="time" @click="chioseTime">{{nowData}}</span>
     <el-date-picker
       v-model="value1"
       type="daterange"
@@ -9,7 +9,7 @@
       start-placeholder="开始日期"
       end-placeholder="结束日期"
       align="center"
-      style="position:absolute;top:0;left:0;"
+      style="position:absolute;bottom:-3vh;right:0;"
       v-show="dataTemp"
       value-format="yyyy-MM-dd"
     ></el-date-picker>
@@ -20,7 +20,7 @@ export default {
   name: "hisTitle", //医院的标题
   data() {
     return {
-      nowTime: "",
+      nowData: "",
       dataTemp: false,
       value1: []
     };
@@ -29,6 +29,10 @@ export default {
     hosNameArr: {
       type: String,
       default: ""
+    },
+    Days: {
+      type: Number,
+      default: 3
     }
   },
   mounted() {
@@ -37,13 +41,25 @@ export default {
   methods: {
     getTime: function() {
       var _this = this;
-      let yy = new Date().getFullYear();
-      let mm = new Date().getMonth() + 1;
-      let dd = new Date().getDate();
-      _this.nowTime = yy + "年" + mm + "月" + dd + "日";
+      var day1 = new Date();
+      day1.setTime(day1.getTime() - 24 * 60 * 60 * 1000 * _this.Days);
+      function conver(s) {
+        return s < 10 ? "0" + s : s;
+      }
+      day1.getFullYear() +
+        "-" +
+        conver(day1.getMonth() + 1) +
+        "-" +
+        conver(day1.getDate());
+      _this.nowData =
+        day1.getFullYear() +
+        "年" +
+        conver(day1.getMonth() + 1) +
+        "月" +
+        conver(day1.getDate()) +
+        "日";
     },
     chioseTime() {
-      console.log("打印下时间");
       this.dataTemp = !this.dataTemp;
     },
     sendData(newdata) {
@@ -52,11 +68,45 @@ export default {
   },
   watch: {
     value1: {
-      handler() {
+      handler(newdata, olddata) {
+        console.log("这是日历的条件");
+        this.sendData(newdata);
+
         setTimeout(() => {
           this.dataTemp = false;
         }, 1000);
-        this.sendData(this.value1);
+        function conver(s) {
+          return s < 10 ? "0" + s : s;
+        }
+        var date1 = new Date(this.value1[0]);
+        var date2 = new Date(this.value1[1]);
+
+        if (this.value1[0] == this.value1[1]) {
+          this.nowData =
+            date1.getFullYear() +
+            "年" +
+            conver(date1.getMonth() + 1) +
+            "月" +
+            conver(date1.getDate() + 1) +
+            "日"; //需要加一解决
+          //   console.log(this.nowData);
+        } else {
+          var time1 =
+            date1.getFullYear() +
+            "年" +
+            conver(date1.getMonth() + 1) +
+            "月" +
+            conver(date1.getDate()) +
+            "日";
+          var time2 =
+            date2.getFullYear() +
+            "年" +
+            conver(date2.getMonth() + 1) +
+            "月" +
+            conver(date2.getDate()) +
+            "日";
+          this.nowData = time1 + " " + "至" + " " + time2;
+        }
       }
     }
   }

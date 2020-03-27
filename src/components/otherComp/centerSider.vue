@@ -2,7 +2,7 @@
   <div id="centerSider">
     <div class="center_cen">
       <div class="center_cen_title" @click="showData">
-        <p style="fontSize:18px;">{{nowData}}</p>
+        <p>{{nowData}}</p>
         <el-date-picker
           v-model="value1"
           type="daterange"
@@ -141,6 +141,9 @@ export default {
         this.$echarts.registerMap(this.nameCountry, res.data, {}); //注册地图
         var option = getOption(this.nameCountry);
         myChart.setOption(option, true);
+        window.addEventListener("resize", function() {
+          myChart.resize();
+        });
         // 跳转到新医院的地址上
         myChart.on("click", function() {
           that.$router.push({
@@ -160,6 +163,9 @@ export default {
         this.$echarts.registerMap("lishui", res.data, {}); //注册地图 西城区的地图
         var option = getBigoption();
         myChart.setOption(option, true); //塞进去
+        window.addEventListener("resize", function() {
+          myChart.resize();
+        });
         var that = this; //改变this的指向 只有在vue实例上面拿到$echarts
         myChart.on("click", function(a) {
           //点击时间触发
@@ -228,9 +234,8 @@ export default {
   cursor: pointer;
 }
 .center_cen .center_cen_title p {
-  font-size: 0.8rem;
+  font: 1.1vh/4.1vh "";
   color: #fff;
   /* margin-top: .9vh; */
-  padding: 0.6vh 0 0 0;
 }
 </style>

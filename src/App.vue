@@ -14,7 +14,7 @@ export default {
   },
   components: {},
   mounted() {
-    this.getUrl();
+    // this.getUrl();
   },
   methods: {
     getUrl() {

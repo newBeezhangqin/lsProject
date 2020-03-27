@@ -6,41 +6,41 @@
         <li>
           <div class="content_data_left">
             <p>门诊人数</p>
-            <span>3,006</span>
+            <span>{{dataShow[0]}}</span>
           </div>
           <div class="content_data_right">
             <p>上月总数</p>
-            <span>16,098</span>
+            <span>{{dataYesShow[0]}}</span>
           </div>
         </li>
         <li>
           <div class="content_data_left">
             <p>处方总量</p>
-            <span>21,574</span>
+            <span>{{dataShow[1]}}</span>
           </div>
           <div class="content_data_right">
             <p>上月总数</p>
-            <span>19,127</span>
+            <span>{{dataYesShow[1]}}</span>
           </div>
         </li>
         <li>
           <div class="content_data_left">
             <p>门诊电子病历</p>
-            <span>17,983</span>
+            <span>{{dataShow[2]}}</span>
           </div>
           <div class="content_data_right">
             <p>上月总数</p>
-            <span>13,478</span>
+            <span>{{dataYesShow[2]}}</span>
           </div>
         </li>
         <li>
           <div class="content_data_left">
             <p>门诊收费金额</p>
-            <span>5,720</span>
+            <span>{{dataShow[3]}}</span>
           </div>
           <div class="content_data_right">
             <p>上月总数</p>
-            <span>4,904</span>
+            <span>{{dataYesShow[3]}}</span>
           </div>
         </li>
       </ul>
@@ -49,7 +49,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "hosdataShow",
+  props: {
+    dataYesShow: {
+      type: Array,
+      default: () => []
+    },
+    dataShow: {
+      type: Array,
+      default: () => []
+    }
+  }
+};
 </script>
 <style scoped>
 #hisdataShow {

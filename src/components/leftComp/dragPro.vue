@@ -152,6 +152,9 @@ export default {
         ]
       };
       myChart.setOption(option);
+      window.addEventListener("resize", function() {
+        myChart.resize();
+      });
     }
   }
 };
@@ -206,7 +209,7 @@ export default {
     rgba(19, 50, 121, 0.1)
   );
 }
-.leftSider_left .leftSider_left_title {
+/* .leftSider_left_title {
   margin-top: 1.85vh;
   overflow: hidden;
   width: 20.8vw;
@@ -214,7 +217,23 @@ export default {
   background: url(../../assets/img/外框2@2x.png) no-repeat center;
   background-size: cover;
 }
-.leftSider_left .leftSider_left_title p {
+.leftSider_left_title p {
+  
+  font-size: 1rem;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 204, 255, 1);
+  margin: 1.1vh 0 0 1.04vw;
+} */
+.leftSider_left_title {
+  overflow: hidden;
+  width: 20.8vw;
+  height: 4.25vh;
+  /* background:linear-gradient(90deg,rgba(2,89,130,0.29) 0%,rgba(3,96,140,0) 100%); */
+  background: url(../../assets/img/外框2@2x.png) no-repeat center;
+  background-size: cover;
+}
+.leftSider_left_title p {
   /* width:96px;
     height:16px; */
   font-size: 1rem;
